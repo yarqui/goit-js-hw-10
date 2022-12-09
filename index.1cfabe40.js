@@ -1,0 +1,2 @@
+!function(){var o,n={input:document.querySelector("input#search-box"),countryList:document.querySelector(".country-list"),countryInfo:document.querySelector(".country-info")};console.log(n.input),console.log(n.countryList),console.log(n.countryInfo),console.log((o=Ukraine,void fetch("https://restcountries.com/v3.1/name/".concat(o)).then((function(o){return o.json()})).then(console.log)))}();
+//# sourceMappingURL=index.1cfabe40.js.map
