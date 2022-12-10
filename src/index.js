@@ -1,4 +1,6 @@
 import './css/styles.css';
+import 'lodash.debounce';
+import { fetchCountries } from './fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -11,10 +13,10 @@ console.log(refs.input);
 console.log(refs.countryList);
 console.log(refs.countryInfo);
 
-function fetchCountries(name) {
-  fetch(`https://restcountries.com/v3.1/name/${name}`)
-    .then(r => r.json())
-    .then(console.log);
-}
+// function fetchCountries(name) {
+//   fetch(`https://restcountries.com/v3.1/name/${name}`)
+//     .then(r => r.json())
+//     .then(console.log);
+// }
 
-console.log(fetchCountries(Ukraine));
+fetchCountries('Ukraine');
