@@ -28,8 +28,7 @@ function onInput(e) {
 function createCountryList(countries) {
   const [{ name, flags, capital, population, languages }] = countries;
 
-  console.log(languages);
-  const markup = `<li>
+  const markupOneCountry = `<li>
   <img class="list-item-img" alt="Flag of ${name.official}" src="${
     flags.svg
   }" width="100px">
@@ -39,7 +38,34 @@ function createCountryList(countries) {
   <p>Languages: ${Object.values(languages)}</p>
   </li>`;
 
-  refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+  // ======================================
+  // ПРИСВОЇТИ КЛАСИ ДЛЯ ІНФО І ЛІСТА? ЧИ ПЕРЕГЛЯНУТИ, МОЖИЛВО, ЛИШЕ ДЛЯ ІНФО? ДЛЯ 1 КРАЇНИ ВСТАВЛЯТИ НЕ В ЛІСТ, А В ІНФО!!!!
+  // МЕПНУТИ КАНТРІС ДЛЯ ВИВОДУ І СТВОРЕННЯ РОЗМІТКИ СПИСКУ
+  // ПЕРЕРОБИТИ ІФИ, А БИ БУВ ІФ ДОВЖИНА БІЛЬШЕ 10, СПЕСІФАЙ!
+  // ЗРОБИТИ СТИЛІ
+  // ======================================
+
+  const markupCountryList = `<li>
+  <img class="list-item-img" alt="Flag of ${name.official}" src="${flags.svg}" width="100px">
+  <p>${name.official}</p>
+  </li>`;
+
+  let countriesArrayLength = countries.length;
+
+  if (countriesArrayLength < 10 || countriesArrayLength > 2) {
+    console.log(countriesArrayLength);
+    refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
+    // return;
+    // =========================================
+    // ТУТ ТРЕБА РЕТЬОРН?
+    // =========================================
+  }
+
+  if (countriesArrayLength === 1) {
+    refs.countryInfo.insertAdjacentHTML('beforeend', markupOneCountry);
+  }
+
+  console.log('specify your search');
 }
 
 function clearMarkup() {
