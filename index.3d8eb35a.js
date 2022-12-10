@@ -1,2 +1,0 @@
-const o={input:document.querySelector("input#search-box"),countryList:document.querySelector(".country-list"),countryInfo:document.querySelector(".country-info")};var n;console.log(o.input),console.log(o.countryList),console.log(o.countryInfo),console.log((n=Ukraine,void fetch(`https://restcountries.com/v3.1/name/${n}`).then((o=>o.json())).then(console.log)));
-//# sourceMappingURL=index.3d8eb35a.js.map
