@@ -1,5 +1,6 @@
+const endPoint = 'https://restcountries.com/v3.1/name/';
+const filter = '?fields=name,capital,population,flags,languages';
+
 export function fetchCountries(name) {
-  fetch(`https://restcountries.com/v3.1/name/${name}`)
-    .then(r => r.json())
-    .then(console.log);
+  fetch(`${endPoint}${name}${filter}`);
 }

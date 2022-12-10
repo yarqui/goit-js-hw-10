@@ -14,11 +14,13 @@ console.log(refs.input);
 console.log(refs.countryList);
 console.log(refs.countryInfo);
 
-// fetchCountries('Ukraine');
-
 refs.input.addEventListener(
   'input',
   debounce(() => {
-    console.log(refs.input.value);
+    onInput(refs.input.value);
   }, DEBOUNCE_DELAY)
 );
+
+function onInput(inputValue) {
+  fetchCountries(inputValue);
+}
