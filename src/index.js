@@ -22,36 +22,32 @@ function onInput(e) {
     return;
   }
 
-  fetchCountries(inputValue).then(createCountryList);
+  fetchCountries(inputValue)
+    .then(renderCountryMarkup)
+    .catch(() => Notify.failure('Oops, there is no country with that name'));
 }
 
-function createCountryList(countries) {
+function renderCountryMarkup(countries) {
   const [{ name, flags, capital, population, languages }] = countries;
   let countriesArrayLength = countries.length;
 
-  const markupCountryList = countries
-    .map(({ name, flags }) => {
-      return `<li class="country-list__item">
-  <img class="country-list__img" alt="Flag of ${name.official}" src="${flags.svg}" height="20px">
-  <p class="country-list__name">${name.official}</p>
-  </li>`;
-    })
-    .join('');
-
   if (countriesArrayLength > 10) {
-    Notify.info('Too many matches found. Please enter a more specific name.');
-    return;
+    return Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    );
   }
 
   if (countriesArrayLength === 1) {
-    refs.countryInfo.insertAdjacentHTML(
+    return refs.countryInfo.insertAdjacentHTML(
       'beforeend',
       renderOneCountry(countries)
     );
-    return;
   }
 
-  refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
+  refs.countryList.insertAdjacentHTML(
+    'beforeend',
+    renderCountryList(countries)
+  );
 }
 
 function renderOneCountry([{ name, flags, capital, population, languages }]) {
@@ -69,13 +65,18 @@ function renderOneCountry([{ name, flags, capital, population, languages }]) {
     </ul>`;
 }
 
+function renderCountryList(countries) {
+  return countries
+    .map(({ name, flags }) => {
+      return `<li class="country-list__item">
+  <img class="country-list__img" alt="Flag of ${name.official}" src="${flags.svg}" height="20px">
+  <p class="country-list__name">${name.official}</p>
+  </li>`;
+    })
+    .join('');
+}
+
 function clearMarkup() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
 }
-
-// ======================================
-// МЕПНУТИ КАНТРІС ДЛЯ ВИВОДУ І СТВОРЕННЯ РОЗМІТКИ СПИСКУ
-// ЗРОБИТИ СТИЛІ
-// markupCountryList & markupOneCountry зробити окремими функціями і передати в кріейт
-// ======================================
