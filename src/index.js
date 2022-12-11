@@ -27,8 +27,35 @@ function onInput(e) {
 
 function createCountryList(countries) {
   const [{ name, flags, capital, population, languages }] = countries;
+  let countriesArrayLength = countries.length;
 
-  const markupOneCountry = `<div class="country-info__header-wrap"><img class="country-info__img" alt="Flag of ${
+  const markupCountryList = countries
+    .map(({ name, flags }) => {
+      return `<li class="country-list__item">
+  <img class="country-list__img" alt="Flag of ${name.official}" src="${flags.svg}" height="20px">
+  <p class="country-list__name">${name.official}</p>
+  </li>`;
+    })
+    .join('');
+
+  if (countriesArrayLength > 10) {
+    Notify.info('Too many matches found. Please enter a more specific name.');
+    return;
+  }
+
+  if (countriesArrayLength === 1) {
+    refs.countryInfo.insertAdjacentHTML(
+      'beforeend',
+      renderOneCountry(countries)
+    );
+    return;
+  }
+
+  refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
+}
+
+function renderOneCountry([{ name, flags, capital, population, languages }]) {
+  return `<div class="country-info__header-wrap"><img class="country-info__img" alt="Flag of ${
     name.official
   }" src="${flags.svg}" width="35px">
   <span class="country-info__name">${name.official}</span>
@@ -39,26 +66,7 @@ function createCountryList(countries) {
   <li><span class="country-info__item-label">Languages:</span> ${Object.values(
     languages
   ).join(', ')}</li>
-</ul>`;
-
-  const markupCountryList = `<li class="country-list__item">
-  <img class="country-list__img" alt="Flag of ${name.official}" src="${flags.svg}" width="35px" height="20px">
-  <p class="country-list__name">${name.official}</p>
-  </li>`;
-
-  let countriesArrayLength = countries.length;
-
-  if (countriesArrayLength > 10) {
-    Notify.info('specify your search');
-    return;
-  }
-
-  if (countriesArrayLength === 1) {
-    refs.countryInfo.insertAdjacentHTML('beforeend', markupOneCountry);
-    return;
-  }
-
-  refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
+    </ul>`;
 }
 
 function clearMarkup() {

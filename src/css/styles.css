@@ -19,19 +19,21 @@ body {
   margin-bottom: 16px;
 }
 
-ul {
+ul,
+p {
+  margin: 0;
   padding: 0;
 }
 
 li {
   list-style: none;
+  padding: 5 0;
 }
 
 .country-info__header-wrap,
 .country-list__item {
   display: flex;
   flex-direction: row;
-  list-style: none;
   align-items: center;
 }
 
