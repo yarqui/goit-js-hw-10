@@ -1,7 +1,7 @@
 import './css/styles.css';
-import 'lodash.debounce';
 import { fetchCountries } from './fetchCountries';
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -28,47 +28,46 @@ function onInput(e) {
 function createCountryList(countries) {
   const [{ name, flags, capital, population, languages }] = countries;
 
-  const markupOneCountry = `<li>
-  <img class="list-item-img" alt="Flag of ${name.official}" src="${
-    flags.svg
-  }" width="100px">
-  <p>${name.official}</p>
-  <p>Capital: ${capital}</p>
-  <p>Population: ${population}</p>
-  <p>Languages: ${Object.values(languages)}</p>
-  </li>`;
+  const markupOneCountry = `<div class="country-info__header-wrap"><img class="country-info__img" alt="Flag of ${
+    name.official
+  }" src="${flags.svg}" width="35px">
+  <span class="country-info__name">${name.official}</span>
+  </div>
+  <ul>
+  <li><span class="country-info__item-label">Capital:</span> ${capital}</li>
+  <li><span class="country-info__item-label">Population:</span> ${population}</li>
+  <li><span class="country-info__item-label">Languages:</span> ${Object.values(
+    languages
+  ).join(', ')}</li>
+</ul>`;
 
-  // ======================================
-  // ПРИСВОЇТИ КЛАСИ ДЛЯ ІНФО І ЛІСТА? ЧИ ПЕРЕГЛЯНУТИ, МОЖИЛВО, ЛИШЕ ДЛЯ ІНФО? ДЛЯ 1 КРАЇНИ ВСТАВЛЯТИ НЕ В ЛІСТ, А В ІНФО!!!!
-  // МЕПНУТИ КАНТРІС ДЛЯ ВИВОДУ І СТВОРЕННЯ РОЗМІТКИ СПИСКУ
-  // ПЕРЕРОБИТИ ІФИ, А БИ БУВ ІФ ДОВЖИНА БІЛЬШЕ 10, СПЕСІФАЙ!
-  // ЗРОБИТИ СТИЛІ
-  // ======================================
-
-  const markupCountryList = `<li>
-  <img class="list-item-img" alt="Flag of ${name.official}" src="${flags.svg}" width="100px">
-  <p>${name.official}</p>
+  const markupCountryList = `<li class="country-list__item">
+  <img class="country-list__img" alt="Flag of ${name.official}" src="${flags.svg}" width="35px" height="20px">
+  <p class="country-list__name">${name.official}</p>
   </li>`;
 
   let countriesArrayLength = countries.length;
 
-  if (countriesArrayLength < 10 || countriesArrayLength > 2) {
-    console.log(countriesArrayLength);
-    refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
-    // return;
-    // =========================================
-    // ТУТ ТРЕБА РЕТЬОРН?
-    // =========================================
+  if (countriesArrayLength > 10) {
+    Notify.info('specify your search');
+    return;
   }
 
   if (countriesArrayLength === 1) {
     refs.countryInfo.insertAdjacentHTML('beforeend', markupOneCountry);
+    return;
   }
 
-  console.log('specify your search');
+  refs.countryList.insertAdjacentHTML('beforeend', markupCountryList);
 }
 
 function clearMarkup() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
 }
+
+// ======================================
+// МЕПНУТИ КАНТРІС ДЛЯ ВИВОДУ І СТВОРЕННЯ РОЗМІТКИ СПИСКУ
+// ЗРОБИТИ СТИЛІ
+// markupCountryList & markupOneCountry зробити окремими функціями і передати в кріейт
+// ======================================
